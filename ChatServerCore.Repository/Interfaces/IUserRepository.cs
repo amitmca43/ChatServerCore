@@ -8,21 +8,15 @@ namespace ChatServerCore.Repository.Interfaces
     {
         Task<IEnumerable<ChatUser>> GetAllUsers();
 
-        Task<ChatUser> GetUser(string id);
+        Task<ChatUser> GetUser(string username);
 
         // add new User document
         Task AddUser(ChatUser item);
 
         // remove a single document / User
-        Task<bool> RemoveUser(string id);
+        Task<bool> RemoveUser(string username);
 
         // update just a single document / User
-        Task<bool> UpdateUser(string id, string body);
-
-        // demo interface - full document update
-        Task<bool> UpdateUserDocument(string id, string body);
-
-        // should be used with high cautious, only in relation with demo setup
-        Task<bool> RemoveAllUsers();
+        Task<bool> UpdateUser(string username, string nickName);
     }
 }

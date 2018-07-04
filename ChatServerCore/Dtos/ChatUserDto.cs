@@ -7,8 +7,6 @@ namespace ChatServerCore.Dtos
 {
     public class ChatUserDto
     {
-        public string Id { get; set; }
-
         public string UserName { get; set; } = string.Empty;
 
         public string NickName { get; set; } = string.Empty;
