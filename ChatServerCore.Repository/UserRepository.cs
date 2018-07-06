@@ -19,12 +19,12 @@ namespace ChatServerCore.Repository
             this.context = new UserContext(settings);
         }
 
-        public async Task<IEnumerable<ChatUser>> GetAllUsers()
+        public async Task<IEnumerable<User>> GetAllUsers()
         {
             return await this.context.Users.Find(_ => true).ToListAsync();
         }
 
-        public async Task<ChatUser> GetUser(string username)
+        public async Task<User> GetUser(string username)
         {
             return await this.context.Users
                              .Find(user => user.UserName == username)
@@ -33,7 +33,7 @@ namespace ChatServerCore.Repository
         }
         
 
-        public async Task AddUser(ChatUser item)
+        public async Task AddUser(User item)
         {
            await this.context.Users.InsertOneAsync(item);
         }
@@ -42,7 +42,7 @@ namespace ChatServerCore.Repository
         {
 
             DeleteResult actionResult = await this.context.Users.DeleteOneAsync(
-                Builders<ChatUser>.Filter.Eq("UserName", username));
+                Builders<User>.Filter.Eq("UserName", username));
 
             return actionResult.IsAcknowledged
                    && actionResult.DeletedCount > 0;
@@ -51,8 +51,8 @@ namespace ChatServerCore.Repository
 
         public async Task<bool> UpdateUser(string username, string nickName)
         {
-            var filter = Builders<ChatUser>.Filter.Eq(s => s.UserName, username);
-            var update = Builders<ChatUser>.Update
+            var filter = Builders<User>.Filter.Eq(s => s.UserName, username);
+            var update = Builders<User>.Update
                                        .Set(s => s.NickName, nickName)
                                        .CurrentDate(s => s.UpdatedOn);
 

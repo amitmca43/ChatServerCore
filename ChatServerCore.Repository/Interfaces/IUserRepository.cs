@@ -6,12 +6,12 @@ namespace ChatServerCore.Repository.Interfaces
 {
     public interface IUserRepository
     {
-        Task<IEnumerable<ChatUser>> GetAllUsers();
+        Task<IEnumerable<User>> GetAllUsers();
 
-        Task<ChatUser> GetUser(string username);
+        Task<User> GetUser(string username);
 
         // add new User document
-        Task AddUser(ChatUser item);
+        Task AddUser(User item);
 
         // remove a single document / User
         Task<bool> RemoveUser(string username);

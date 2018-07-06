@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace ChatServerCore.Dtos
 {
+    [Serializable]
     public class ChatUserDto
     {
         public string UserName { get; set; } = string.Empty;

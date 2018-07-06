@@ -22,7 +22,7 @@ namespace ChatServerCore.Controllers
 
        
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ChatUser>>> GetAll()
+        public async Task<ActionResult<IEnumerable<User>>> GetAll()
         {
             var users = await this.userRepository.GetAllUsers();
             return Ok(users);
@@ -32,12 +32,12 @@ namespace ChatServerCore.Controllers
         [HttpGet("{username}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<ChatUser>> GetById(string username)
+        public async Task<ActionResult<User>> GetById(string username)
         {
             var user = await this.userRepository.GetUser(username);
             if (user == null)
             {
-                return new NotFoundResult();
+                return new NotFoundObjectResult($"No user found with username '{username}'");
             }
             return user;
         }
@@ -53,7 +53,7 @@ namespace ChatServerCore.Controllers
                 return BadRequest(ModelState);
             }
 
-            await this.userRepository.AddUser(new ChatUser
+            await this.userRepository.AddUser(new User
             {
                 UserName = newUser.UserName,
                 CreatedOn = DateTime.Now,
@@ -64,8 +64,7 @@ namespace ChatServerCore.Controllers
 
             var user = await this.GetById(newUser.UserName);
 
-            return CreatedAtAction(nameof(GetById), new { userName = newUser.UserName}, user.Value);
-          
+            return CreatedAtAction(nameof(GetById), new { userName = newUser.UserName}, user.Value);          
         }
        
         [HttpPut("{username}")]
@@ -76,7 +75,7 @@ namespace ChatServerCore.Controllers
             var user = await this.userRepository.GetUser(username);
             if (user == null)
             {
-                return new NotFoundResult();
+                return new NotFoundObjectResult($"No user found with username '{username}'");
             }
 
             var result = await this.userRepository.UpdateUser(username, nickName);
@@ -93,7 +92,7 @@ namespace ChatServerCore.Controllers
             var user = await this.userRepository.GetUser(username);
             if (user == null)
             {
-                return new NotFoundResult();
+                return new NotFoundObjectResult($"No user found with username '{username}'");
             }
 
             await this.userRepository.RemoveUser(username);

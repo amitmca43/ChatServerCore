@@ -14,11 +14,11 @@ namespace ChatServerCore.Repository.Context
             this.database = client.GetDatabase(settings.Value.Database);
 
             //Setup Index
-            var indexKeys = Builders<ChatUser>.IndexKeys.Ascending(item => item.UserName);
-            var indexModel = new CreateIndexModel<ChatUser>(indexKeys);
-            this.database.GetCollection<ChatUser>("User").Indexes.CreateOne(indexModel);
+            var indexKeys = Builders<User>.IndexKeys.Ascending(item => item.UserName);
+            var indexModel = new CreateIndexModel<User>(indexKeys);
+            this.database.GetCollection<User>("User").Indexes.CreateOne(indexModel);
         }
 
-        public IMongoCollection<ChatUser> Users => this.database.GetCollection<ChatUser>("User");
+        public IMongoCollection<User> Users => this.database.GetCollection<User>("User");
     }
 }
